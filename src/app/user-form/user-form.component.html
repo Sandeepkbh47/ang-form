@@ -1,0 +1,56 @@
+<div class="flex">
+    <div class="flex m-auto cursor-pointer select-none" (click)="loadForm(loadedFormIndex-1)">
+        <span class="material-icons text-8xl arrow left-arrow"
+            [ngStyle]="loadedFormIndex<=0?{opacity:0.5}:{}">arrow_back_ios</span>
+    </div>
+    <div class="w-screen/50 flex flex-col mx-auto bg-white rounded-xl shadow-md overflow-hidden"
+        [formGroup]="registrationForm">
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input placeholder="Rakesh" matInput formControlName="username" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input placeholder="rakesh141@gmail.com" matInput formControlName="email" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>EmpCode</mat-label>
+            <input placeholder="13552@1413" matInput formControlName="empcode" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>City</mat-label>
+            <mat-select formControlName="city">
+                <mat-option>None</mat-option>
+                @for(city of cities;track $index){
+                <mat-option [value]="city">{{city}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Project Name</mat-label>
+            <input placeholder="RedEye" matInput formControlName="prj_name" />
+        </mat-form-field>
+        <div class="flex flex-col ml-4 group">
+            <label class="group-hover:text-xs h-4 text-gray-600">CT Rating</label>
+            <app-rating formControlName="rating"></app-rating>
+        </div>
+        <div class="mx-auto my-8">
+            <button type="submit" mat-raised-button color="primary" (click)="submitForm()"
+                [disabled]="!registrationForm.valid">Submit</button>
+        </div>
+    </div>
+    <div class="flex m-auto cursor-pointer select-none" (click)="loadForm(loadedFormIndex+1)">
+        <span class="material-icons text-8xl arrow right-arrow"
+            [ngStyle]="loadedFormIndex==(savedForms.length-1)?{opacity:0.5}:{}">arrow_forward_ios</span>
+    </div>
+</div>
+<div class="w-screen/90 m-auto flex flex-col mt-10">
+    <div class="text-blue-600 text-lg"><span>Saved Forms</span></div>
+    <div class="flex gap-4 w-fit  cursor-pointer flex-wrap">
+        @for(form of savedForms;;track $index){
+        <div class="border border-indigo-500 rounded-[10px] hover:bg-blue-300 p-4" (click)="loadForm($index)">
+            <pre>{{form|json}}</pre>
+        </div>
+        }
+    </div>
+</div>
